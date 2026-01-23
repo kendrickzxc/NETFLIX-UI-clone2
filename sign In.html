@@ -3,137 +3,478 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netflix</title>
-
-    <!-- css -->
-    <link rel="stylesheet" href="css/signIn.css">
-
-    <!-- favicon -->
+    <title>KiroBox - Sign In</title>
     <link rel="shortcut icon" href="img/fav-icon.png" type="image/x-icon">
-    
-    <!-- bs5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    
-    <!-- google fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Commissioner:wght@100;300;500;700;900&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit' !important;
+            scroll-behavior: smooth !important;
+        }
+
+        *::selection{
+            background-color: #4C4948 !important;
+            color: white;
+        }
+
+        #mainBg{
+            height: 100%;
+            width: 100%;
+            min-height: 100vh;
+            background-color: #000000;
+            overflow: hidden;
+        }
+
+        #signInner{
+            min-height: 650px;
+        }
+
+        #collapseDown{
+            visibility: hidden;
+        }
+
+        .form-control{
+            border: 1px solid rgb(94,96,96) !important;
+            overflow: hidden !important;
+        }
+
+        .form-control::placeholder{
+            user-select: none !important;
+        }
+
+        #inpLabel{
+            color: #B4B4B4 !important;
+            width: 80%;
+        }
+
+        .form-control:focus {
+            color: #000000 !important;
+            background-color: #ffffff !important;
+            border-color: #4C4948 !important;
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(76, 73, 72, 0.25) !important;
+        }
+
+        .form-floating>.form-control:focus~label {
+            font-size: 0.8rem !important;
+            font-weight: 100 !important;
+            color: #4C4948 !important;
+        }
+
+        .form-floating>.form-control-plaintext~label::after, .form-floating>.form-control:focus~label::after, .form-floating>.form-control:not(:placeholder-shown)~label::after, .form-floating>.form-select~label::after {
+            position: absolute;
+            inset: 1rem 0.2rem;
+            z-index: -1;
+            height: 1.5em;
+            content: "";
+            background-color: transparent !important;
+        }
+
+        .cbx {
+            position: relative;
+            top: 1px;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #c8ccd4;
+            border-radius: 3px;
+            transition: all 0.1s ease;
+            cursor: pointer;
+            display: block;
+        }
+
+        .cbx:after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 7px;
+            width: 5px;
+            height: 10px;
+            opacity: 0;
+            transform: rotate(45deg) scale(0);
+            border-right: 2px solid black;
+            border-bottom: 2px solid black;
+            transition: all 0.1s ease;
+        }
+
+        .lbl {
+            margin-left: 5px;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+
+        #cbx:checked ~ .cbx {
+            border-color: transparent;
+            background: white;
+        }
+
+        #cbx:checked ~ .cbx:after {
+            opacity: 1;
+            transform: rotate(45deg) scale(1);
+        }
+
+        .cntr {
+            position: relative;
+        }
+
+        .hidden-xs-up {
+            display: none!important;
+        }
+
+        .anchorHov:hover{
+            text-decoration: underline !important;
+        }
+
+        footer{
+            height: calc(100% - 760.5625px);
+        }
+
+        #footerUl li:active > a{
+            color: red !important;
+        }
+
+        #langDrop2.langDropShow2{
+            position: absolute;
+            display: block !important;
+        }
+
+        .langActive{
+            font-weight: bold;
+            background-color: rgb(216, 216, 216);
+        }
+
+        footer #langDrop2{
+            min-width: 8.8rem !important;
+            max-width: 8.8rem !important;
+        }
+
+        footer .col-3 {
+            flex: 0 0 auto;
+            width: 50.5%;
+        }
+
+        .submitBtn {
+            background-color: #FFFFFF !important;
+            color: #000000 !important;
+            font-weight: bold !important;
+        }
+
+        .submitBtn:hover {
+            background-color: #E0E0E0 !important;
+        }
+
+        .toggleFormBtn {
+            color: #FFFFFF !important;
+            cursor: pointer;
+        }
+
+        .toggleFormBtn:hover {
+            text-decoration: underline !important;
+        }
+
+        .alert {
+            display: none;
+        }
+
+        @media only screen and (min-width: 600px) {
+            #signInner{
+                max-width: 450px !important;
+            }   
+            
+            #mainBg .bgImg{
+                min-height: 100%;
+                min-width: 100%;
+            }
+            .form-floating #inpLabel{
+                font-size: 1rem;
+                text-overflow: ellipsis !important;
+                white-space: nowrap !important;
+            }
+        }
+        @media only screen and (max-width: 600px) {
+            #bgImg{
+                opacity: 0 !important;
+            }
+
+            #signInner{
+                max-width: 100% !important;
+                padding: 0 !important;
+                margin-bottom: 0 !important;
+                border-bottom: 1px solid #B4B4B4;
+                justify-content: start !important;
+                min-height: 600px;
+            } 
+        }
+
+        @media only screen and (max-width: 1280px) {
+            #navbar{
+                padding: 0 !important;
+            }
+            #navbarInner{
+                margin: 0 16px !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+        }
+        @media only screen and (max-width: 900px) {
+            #navbarBrand img{
+                width: 7rem !important;
+            }
+        }
+        @media only screen and (max-width: 1000px) {
+            #footerUl li{
+                width: 50% !important;
+            }
+            #footCont, #footInner{
+                padding: 0 !important;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div id="mainBg" class="d-flex flex-column">
+        <!-- Navbar -->
+        <nav class="navbar bg-transparent py-4 px-5" id="navbar">
+            <div class="container-fluid" id="navbarInner">
+                <a href="index.html" id="navbarBrand">
+                    <img src="img/cleaned_1000020217.png" width="150" alt="KiroBox">
+                </a>
+            </div>
+        </nav>
 
-    <div class="container-fluid p-0 bg-black position-relative" id="mainBg">
-
-        <img src="img/signinBg.jpg" class="bgImg opacity-50" id="bgImg" alt="">
-
-        <div class="container-fluid d-flex flex-column position-absolute p-0 top-0" style="height: 100%;">
-    
-            <!-- navbar starts -->
-                <nav class="navbar bg-transparent align-items-center w-100 px-5 d-flex justify-content-center top-0" style="z-index: 10;" id="navbar">
-                    <div class="container-fluid nav-inner py-2 mx-5 px-5" id="navbarInner">
-                        <a href="index.html" class="navbar-brand mt-1 px-2" style="max-width: 100% !important;" id="navbarBrand">
-                            <img src="img/logo.png" width="150" alt="">
-                        </a>
+        <!-- Sign In/Sign Up Form -->
+        <div class="flex-grow-1 d-flex justify-content-center align-items-center">
+            <div class="bg-white rounded-3 p-5 mb-5" id="signInner">
+                <div id="alertContainer"></div>
+                
+                <!-- Sign In Form -->
+                <div id="signInForm">
+                    <h1 class="mb-4 fw-bold text-black">Sign In</h1>
+                    
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control bg-light" id="loginUsername" placeholder="Username">
+                        <label for="loginUsername" id="inpLabel">Username</label>
                     </div>
-                </nav>
 
-            <!-- navbar ends -->
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control bg-light" id="loginPassword" placeholder="Password">
+                        <label for="loginPassword" id="inpLabel">Password</label>
+                    </div>
 
-            <!-- sign-in form starts -->
-           
+                    <button type="button" class="btn submitBtn w-100 py-3 mb-3" onclick="handleSignIn()">Sign In</button>
 
-            <div class="container-fluid d-flex justify-content-center align-items-center p-0" id="signIn">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="cntr">
+                            <input type="checkbox" id="cbx" class="hidden-xs-up">
+                            <label for="cbx" class="cbx"></label>
+                            <label for="cbx" class="lbl text-black">Remember me</label>
+                        </div>
+                        <a href="#" class="text-black anchorHov">Need help?</a>
+                    </div>
 
-                <div class="container p-5 mb-5 rounded-2 bg-black d-flex justify-content-evenly flex-column bg-opacity-75" id="signInner">
-                    <h2 class="fw-semibold text-white px-4">Sign In</h2>
+                    <p class="text-black">New to KiroBox? <span class="toggleFormBtn fw-bold" onclick="toggleForm()">Sign up now</span></p>
+                </div>
 
-                    <form class="mailForm p-4 d-flex flex-column gap-3">
-                        <div class="form-floating w-100 rounded-1 " style="background-color: rgb(22 22 22 / 70%) !important;">
-                            <input type="email" class="form-control rounded-1 bg-transparent" id="floatingInput" placeholder="name@example.com">
-                            <label for="floatingInput" class="inpLabel d-block bg-transparent fw-bold" id="inpLabel">Email or phone number</label>
-                          </div>
-
-                        <div class="form-floating w-100 rounded-1 " style="background-color: rgb(22 22 22 / 70%) !important;">
-                            <input type="password" class="form-control rounded-1 bg-transparent" id="floatingPassword" placeholder="name@example.com">
-                            <label for="floatingPassword" class="inpLabel d-block bg-transparent fw-bold" id="inpLabel">Password</label>
-                          </div>
-                          <a href="#"><button class="btn w-100 signin rounded-1 border-0 text-white fw-bold" style="background-color: rgb(229, 9, 20) !important; font-size: 1.5rem;">Sign In</button></a>
-                          <a href="#" class="text-center text-white text-decoration-none fw-bold">Forgot password?</a>
-                    </form>
+                <!-- Sign Up Form -->
+                <div id="signUpForm" style="display: none;">
+                    <h1 class="mb-4 fw-bold text-black">Sign Up</h1>
                     
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control bg-light" id="registerUsername" placeholder="Username">
+                        <label for="registerUsername" id="inpLabel">Username</label>
+                    </div>
 
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control bg-light" id="registerPassword" placeholder="Password">
+                        <label for="registerPassword" id="inpLabel">Password</label>
+                    </div>
 
-                          <div class="remBottom d-flex flex-column gap-2 px-4">
-                            <div class="remember text-white d-flex align-items-center gap-2">
-                                <div class="cntr">
-                                    <input checked="" type="checkbox" id="cbx" class="hidden-xs-up">
-                                    <label for="cbx" class="cbx"></label>
-                                  </div>
-                                <label for="rmbrMe" class="fw-semibold">Remember Me</label>
-                            </div>
+                    <div class="form-floating mb-3">
+                        <select class="form-control bg-light" id="registerGender">
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <label for="registerGender" id="inpLabel">Gender</label>
+                    </div>
 
-                            <span class="d-flex align-items-center gap-2"><span  style="color: #B4B4B4; font-weight: 900;">New to Netflix?</span><a href="index.html" class="anchorHov text-decoration-none text-white fw-bolder">Sign Up Now.</a></span>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control bg-light" id="registerCountry" placeholder="Country">
+                        <label for="registerCountry" id="inpLabel">Country</label>
+                    </div>
 
-                            <p class="m-0" style="font-weight: bold; font-size: 0.8rem; color: #B4B4B4;">This page is protected by Google reCAPTCHA to ensure you're not a bot. <button class="bg-transparent border-0 text-primary fw-bold anchorHov" id="learnMore">Learn more.</button></p>
-                            <span id="collapseDown" style="font-weight: bold; font-size: 0.8rem; color: #B4B4B4;">The information collected by Google reCAPTCHA is subject to the Google 
-                              <a href="#" class="anchorHov text-decoration-none">Privacy Policy</a> and <a href="#" class="anchorHov text-decoration-none">Terms and Service</a>, and is used for providing, maintaining, and improving the reCAPTCHA service and for general security purposes (it is not used for personalised advertising by Google).</span>
-                          </div>
+                    <button type="button" class="btn submitBtn w-100 py-3 mb-3" onclick="handleSignUp()">Sign Up</button>
 
-                    
+                    <p class="text-black">Already have an account? <span class="toggleFormBtn fw-bold" onclick="toggleForm()">Sign in now</span></p>
                 </div>
             </div>
-            <!-- sign-in form ends -->
-
-
-            <!-- footer starts -->
-            <footer class="py-4 px-3 d-flex align-items-center bg-black bg-opacity-75">
-                <div class="container-fluid p-5" id="footCont">
-                    <div class="container px-5 d-flex justify-content-center flex-column gap-1" id="footInner">
-                        <h6 class="fw-bold" style="color: #B4B4B4;">Questions? &nbsp;&nbsp; Call: <a href="tel:000-800-100-8343" class="anchorHov text-decoration-none" style="color: #B4B4B4;">000-800-100-8343</a></h6>
-
-                        <div class="footerOptions">
-                            <ul class="list-unstyled d-flex flex-wrap" id="footerUl">
-                                <li class="w-25 my-2"><a href="FAQ.html" class="fw-bolder" style="color: #B4B4B4;">FAQ</a></li>
-                                <li class="w-25 my-2"><a href="#" class="fw-bolder" style="color: #B4B4B4;">Help center</a></li>
-                                <li class="w-25 my-2"><a href="#" class="fw-bolder" style="color: #B4B4B4;">Terms of Use</a></li>
-                                <li class="w-25 my-2"><a href="#" class="fw-bolder" style="color: #B4B4B4;">Privacy</a></li>
-                                <li class="w-25 my-2"><a href="#" class="fw-bolder" style="color: #B4B4B4;">Cookie Preferences</a></li>
-                                <li class="w-25 my-2"><a href="#" class="fw-bolder" style="color: #B4B4B4;">Corporate Information</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-3 position-relative">
-                            <button id="langBtn2" class="btn bg-black bg-opacity-50 px-4 py-1 position-relative dropdown-toggle text-white d-flex align-items-center justify-content-between gap-2" style="border: 0.5px solid rgb(138, 138, 138);" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="15" height="15" x="0" y="0" viewBox="0 0 469.333 469.333" style="enable-background:new 0 0 512 512" xml:space="preserve" class=""><g><path d="M253.227 300.267 199.04 246.72l.64-.64c37.12-41.387 63.573-88.96 79.147-139.307h62.507V64H192V21.333h-42.667V64H0v42.453h238.293c-14.4 41.173-36.907 80.213-67.627 114.347-19.84-22.08-36.267-46.08-49.28-71.467H78.72c15.573 34.773 36.907 67.627 63.573 97.28l-108.48 107.2L64 384l106.667-106.667 66.347 66.347 16.213-43.413zM373.333 192h-42.667l-96 256h42.667l24-64h101.333l24 64h42.667l-96-256zm-56 149.333L352 248.853l34.667 92.48h-69.334z" fill="#ffffff" opacity="1" data-original="#000000" class=""></path></g></svg>
-                                <span id="langSpan2"class="text-start">English</span>
-                            </button>
-                            <ul class="text-center mt-1 d-none overflow-hidden position-absolute list-unstyled bg-white w-50 rounded-1" id="langDrop2">
-                            <li class="langList2 px-3 lh-lg"><a class="text-decoration-none w-100 text-black langItems">English</a></li>
-                            <li class="langList2 px-3 lh-lg"><a class="text-decoration-none w-100 text-black langItems">&nbsp;&nbsp;हिन्दी&nbsp;&nbsp;&nbsp;</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-            </footer>
-            <!-- footer ends -->
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
-    </div>
-    <!-- js -->
-    <script src="signIn.js"></script>
-    <!-- bs5 js -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
+        <!-- Footer -->
+        <footer class="py-4 px-3 bg-black bg-opacity-75">
+            <div class="container-fluid p-3" id="footCont">
+                <div class="container px-3" id="footInner">
+                    <h6 class="fw-bold" style="color: #B4B4B4;">Questions? Call: <a href="tel:000-800-100-8343" class="anchorHov text-decoration-underline" style="color: #B4B4B4;">000-800-100-8343</a></h6>
+                    <div class="col-3 mt-3 position-relative">
+                        <button id="langBtn2" class="btn bg-black bg-opacity-50 px-4 py-1 position-relative dropdown-toggle text-white d-flex align-items-center justify-content-between gap-2" style="border: 0.5px solid rgb(138, 138, 138);">
+                            <span id="langSpan2" class="text-start">English</span>
+                        </button>
+                        <ul class="text-center mt-1 d-none overflow-hidden position-absolute list-unstyled bg-white rounded-1" id="langDrop2">
+                            <li class="langList2 px-3 lh-lg"><a class="text-decoration-none w-100 text-black">English</a></li>
+                            <li class="langList2 px-3 lh-lg"><a class="text-decoration-none w-100 text-black">हिन्दी</a></li>
+                        </ul>
+                    </div>
+                    <p class="my-3"><a href="#" class="anchorHov text-decoration-none" style="color: #B4B4B4;">KiroBox Philippines</a></p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API_URL = 'http://localhost:5000';
+
+        // Toggle between Sign In and Sign Up
+        function toggleForm() {
+            const signInForm = document.getElementById('signInForm');
+            const signUpForm = document.getElementById('signUpForm');
+            
+            if (signInForm.style.display === 'none') {
+                signInForm.style.display = 'block';
+                signUpForm.style.display = 'none';
+            } else {
+                signInForm.style.display = 'none';
+                signUpForm.style.display = 'block';
+            }
+            clearAlert();
+        }
+
+        // Show alert message
+        function showAlert(message, type = 'danger') {
+            const alertContainer = document.getElementById('alertContainer');
+            alertContainer.innerHTML = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            document.querySelector('.alert').style.display = 'block';
+        }
+
+        function clearAlert() {
+            document.getElementById('alertContainer').innerHTML = '';
+        }
+
+        // Handle Sign In
+        async function handleSignIn() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (!username || !password) {
+                showAlert('Please enter username and password');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/api/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('username', data.username);
+                    localStorage.setItem('role', data.role);
+                    
+                    showAlert('Login successful! Redirecting...', 'success');
+                    
+                    setTimeout(() => {
+                        if (data.role === 'admin') {
+                            window.location.href = 'admin.html';
+                        } else {
+                            window.location.href = 'index.html';
+                        }
+                    }, 1000);
+                } else {
+                    showAlert(data.error || 'Login failed');
+                }
+            } catch (error) {
+                showAlert('Connection error. Please try again.');
+            }
+        }
+
+        // Handle Sign Up
+        async function handleSignUp() {
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+            const gender = document.getElementById('registerGender').value;
+            const country = document.getElementById('registerCountry').value;
+
+            if (!username || !password) {
+                showAlert('Username and password are required');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/api/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password, gender, country })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('username', data.username);
+                    localStorage.setItem('role', data.role);
+                    
+                    showAlert('Registration successful! Redirecting...', 'success');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1000);
+                } else {
+                    showAlert(data.error || 'Registration failed');
+                }
+            } catch (error) {
+                showAlert('Connection error. Please try again.');
+            }
+        }
+
+        // Language dropdown
+        let langBtn2 = document.getElementById('langBtn2');
+        let langDrop2 = document.getElementById('langDrop2');
+        let langSpan2 = document.getElementById('langSpan2');
+        let langList2 = document.querySelectorAll('.langList2');
+
+        langBtn2.addEventListener('click', () => {
+            langDrop2.classList.toggle("langDropShow2");
+        });
+
+        langList2.forEach(item => item.addEventListener('click', function(e) {
+            langSpan2.innerText = e.target.innerText;
+            langList2.forEach(lang => lang.classList.remove("langActive"));
+            this.classList.add("langActive");
+            langDrop2.classList.remove("langDropShow2");
+        }));
+
+        // Enter key support
+        document.getElementById('loginPassword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') handleSignIn();
+        });
+
+        document.getElementById('registerCountry').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') handleSignUp();
+        });
+    </script>
 </body>
 </html>
